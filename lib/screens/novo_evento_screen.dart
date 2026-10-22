@@ -35,9 +35,24 @@ class _NovoEventoScreenState extends State<NovoEventoScreen> {
   // 4) crie um Evento com os dados dos controllers;
   // 5) devolva o objeto com Navigator.pop(context, evento).
   Future<void> _salvar() async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('TODO 09: implementar cadastro.')),
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+
+    setState(() => _salvando = true);
+
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+
+    final evento = Evento(
+      id: DateTime.now().millisecondsSinceEpoch,
+      titulo: _tituloController.text.trim(),
+      local: _localController.text.trim(),
+      categoria: _categoria,
+      descricao: _descricaoController.text.trim(),
+      inscrito: _inscrito,
     );
+
+    if (!mounted) return;
+
+    Navigator.pop(context, evento);
   }
 
   @override
