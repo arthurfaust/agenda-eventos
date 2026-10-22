@@ -64,9 +64,24 @@ class _HomeScreenState extends State<HomeScreen> {
   // Abra DetalhesEventoScreen usando Navigator.push e aguarde um bool.
   // Se voltar true, remova o evento da lista. Caso contrario, atualize a tela.
   Future<void> _abrirDetalhes(Evento evento) async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('TODO 02: implementar navegacao.')),
+    final excluir = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute<bool>(
+        builder: (_) => DetalhesEventoScreen(evento: evento),
+      ),
     );
+
+    if (!mounted) return;
+
+    if (excluir == true) {
+      setState(() => _eventos.remove(evento));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Evento "${evento.titulo}" removido.')),
+      );
+    } else {
+      // A tela de detalhes pode ter alterado evento.inscrito.
+      setState(() {});
+    }
   }
 
   // TODO_ATIVIDADE_03
