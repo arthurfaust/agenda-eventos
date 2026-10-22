@@ -20,6 +20,15 @@ class _CicloVidaScreenState extends State<CicloVidaScreen> {
     // Crie AppLifecycleListener e use onStateChange.
     // No callback: atualize _estadoAtual, adicione o nome do estado em
     // _historico e use setState(). Tambem registre com debugPrint().
+    _listener = AppLifecycleListener(
+      onStateChange: (AppLifecycleState estado) {
+        debugPrint('AppLifecycleState: ${estado.name}');
+        setState(() {
+          _estadoAtual = estado.name;
+          _historico.add(estado.name);
+        });
+      },
+    );
   }
 
   @override
