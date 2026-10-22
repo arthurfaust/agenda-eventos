@@ -16,9 +16,12 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
   // Retorne para a tela anterior um Map<String, bool> contendo as chaves
   // 'notificacoes' e 'modoCompacto'.
   void _salvar() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('TODO 10: devolver configuracoes.')),
-    );
+    final configuracoes = <String, bool>{
+      'notificacoes': _notificacoes,
+      'modoCompacto': _modoCompacto,
+    };
+
+    Navigator.pop(context, configuracoes);
   }
 
   @override
