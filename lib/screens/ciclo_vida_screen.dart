@@ -35,6 +35,7 @@ class _CicloVidaScreenState extends State<CicloVidaScreen> {
   void dispose() {
     // TODO_ATIVIDADE_12
     // Libere a assinatura do AppLifecycleListener antes de super.dispose().
+    _listener?.dispose();
     super.dispose();
   }
 
