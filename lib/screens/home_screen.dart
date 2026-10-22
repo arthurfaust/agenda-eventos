@@ -221,9 +221,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   // TODO_ATIVIDADE_05
                   // Use Iterable.map() para transformar cada String da lista
                   // categorias em um FilterChip e finalize com toList().
-                  children: const [
-                    Chip(label: Text('TODO 05: categorias')),
-                  ],
+                  children: categorias
+                      .map(
+                        (categoria) => FilterChip(
+                          label: Text(categoria),
+                          selected: _categoria == categoria,
+                          onSelected: (_) {
+                            setState(() => _categoria = categoria);
+                          },
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
               SwitchListTile(
