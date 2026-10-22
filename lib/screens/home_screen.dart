@@ -46,7 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
   // Filtre por texto, categoria e opcionalmente por eventos em que o usuario
   // esta inscrito. Consulte o enunciado antes de implementar.
   List<Evento> get _eventosFiltrados {
-    return _eventos;
+    final busca = _buscaController.text.trim().toLowerCase();
+
+    return _eventos.where((evento) {
+      final atendeBusca = busca.isEmpty ||
+          evento.titulo.toLowerCase().contains(busca) ||
+          evento.local.toLowerCase().contains(busca);
+      final atendeCategoria =
+          _categoria == 'Todos' || evento.categoria == _categoria;
+      final atendeInscricao = !_somenteInscritos || evento.inscrito;
+
+      return atendeBusca && atendeCategoria && atendeInscricao;
+    }).toList();
   }
 
   // TODO_ATIVIDADE_02
