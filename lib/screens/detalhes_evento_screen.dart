@@ -102,12 +102,12 @@ class _DetalhesEventoScreenState extends State<DetalhesEventoScreen> {
             // O texto do botao deve mudar conforme o estado.
             FilledButton.icon(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('TODO 08: alterar inscricao.')),
-                );
+                setState(() => evento.inscrito = !evento.inscrito);
               },
-              icon: const Icon(Icons.how_to_reg),
-              label: const Text('TODO 08'),
+              icon: Icon(evento.inscrito ? Icons.cancel : Icons.how_to_reg),
+              label: Text(
+                evento.inscrito ? 'Cancelar inscricao' : 'Inscrever-se',
+              ),
             ),
           ],
         ),
