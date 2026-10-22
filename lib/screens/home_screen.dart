@@ -129,8 +129,30 @@ class _HomeScreenState extends State<HomeScreen> {
   // Exiba um AlertDialog de confirmacao e, se o usuario confirmar,
   // retorne a EntradaScreen limpando a pilha de rotas com pushAndRemoveUntil.
   Future<void> _sair() async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('TODO 04: implementar saida.')),
+    final confirmar = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Sair'),
+        content: const Text('Deseja realmente sair do aplicativo?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancelar'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Sair'),
+          ),
+        ],
+      ),
+    );
+
+    if (!mounted || confirmar != true) return;
+
+    Navigator.pushAndRemoveUntil<void>(
+      context,
+      MaterialPageRoute<void>(builder: (_) => const EntradaScreen()),
+      (route) => false,
     );
   }
 
