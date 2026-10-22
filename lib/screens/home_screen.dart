@@ -88,8 +88,18 @@ class _HomeScreenState extends State<HomeScreen> {
   // Abra NovoEventoScreen e aguarde um Evento. Se vier um resultado,
   // adicione-o a lista usando setState() e mostre um SnackBar.
   Future<void> _adicionarEvento() async {
+    final novoEvento = await Navigator.push<Evento>(
+      context,
+      MaterialPageRoute<Evento>(
+        builder: (_) => const NovoEventoScreen(),
+      ),
+    );
+
+    if (!mounted || novoEvento == null) return;
+
+    setState(() => _eventos.add(novoEvento));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('TODO 03: implementar novo evento.')),
+      SnackBar(content: Text('Evento "${novoEvento.titulo}" cadastrado.')),
     );
   }
 
