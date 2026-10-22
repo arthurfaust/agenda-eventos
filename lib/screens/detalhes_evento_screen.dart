@@ -20,9 +20,27 @@ class _DetalhesEventoScreenState extends State<DetalhesEventoScreen> {
   // Use showDialog<bool>. Se o usuario confirmar, volte para a Home com
   // Navigator.pop(context, true). Cancelar deve fechar apenas o dialogo.
   Future<void> _confirmarExclusao() async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('TODO 07: implementar exclusao.')),
+    final confirmar = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Excluir evento'),
+        content: Text('Deseja excluir "${widget.evento.titulo}"?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancelar'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Excluir'),
+          ),
+        ],
+      ),
     );
+
+    if (!mounted || confirmar != true) return;
+
+    Navigator.pop(context, true);
   }
 
   @override
